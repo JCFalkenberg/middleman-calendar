@@ -1,6 +1,6 @@
 # Middleman::Calendar
 
-When building the site for my [comic](http://bobscomic.com) in [middleman](http, I wanted a graphical calendar for the archives, and in looking for solutions,
+When building the site for my [comic](http://bobscomic.com) in [middleman](https://middlemanapp.com), I wanted a graphical calendar for the archives, and in looking for solutions,
 I found [week_of_month](https://github.com/sachin87/week-of-month) which let me build a GUI fairly easily
 
 The calendar is stylable to your desire (and does require some styling to not just be an ugly list of lists), and an example is provided below
