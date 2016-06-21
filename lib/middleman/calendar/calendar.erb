@@ -1,0 +1,106 @@
+<div class="middleman_calendar_div">
+<% WeekOfMonth.configuration.monday_active = false %>
+<% articlesForMonth = Hash.new %>
+<% articlesForMonthArray = Array.new %>
+
+<% previousTest = @calendar_article.previous_article %>
+<% while previousTest %>
+	<% if previousTest.date.year == @calendar_article.date.year && previousTest.date.month == @calendar_article.date.month %>
+		<% articlesForMonth[previousTest.date.day] = previousTest %>
+		<% articlesForMonthArray += [previousTest] %>
+		<% previousTest = previousTest.previous_article %>
+	<% else %>
+		<% previousTest = nil %>
+	<% end %>
+<% end %>
+<% articlesForMonthArray = articlesForMonthArray.reverse() %>
+<% articlesForMonthArray += [@calendar_article] %>
+<% articlesForMonth[@calendar_article.date.day] = article %>
+
+<% nextTest = @calendar_article.next_article %>
+<% while nextTest %>
+	<% if nextTest.date.year == @calendar_article.date.year && nextTest.date.month == @calendar_article.date.month %>
+		<% articlesForMonth[nextTest.date.day] = nextTest %>
+		<% articlesForMonthArray += [nextTest] %>
+		<% nextTest = nextTest.next_article %>
+	<% else %>
+		<% nextTest = nil %>
+	<% end %>
+<% end %>
+
+<% first_article = articlesForMonthArray.first %>
+
+<span class="middleman_calendar_previous_link">
+<% if first_article %>
+	<% previous = first_article.previous_article %>
+	<% if previous %>
+		<%= link_to "<<", previous %>
+	<% else %>
+		<%= "<<" %>
+	<% end %>
+<% else %>
+	<%= "<<" %>
+<% end %>
+</span>
+
+<span class="middleman_calendar_month_link">
+<%= link_to @calendar_article.date.strftime("%B %Y"), blog_month_path(@calendar_article.date.year, @calendar_article.date.month, @blog_name) %>
+</span>
+
+<span class="middleman_calendar_next_link">
+<% last_calendar_article = articlesForMonthArray.last %>
+<% if last_calendar_article %>
+	<% nextarticle = last_calendar_article.next_article %>
+	<% if nextarticle %>
+		<%= link_to ">>", nextarticle %>
+	<% else %>
+		<%= ">>" %>
+	<% end %>
+<% else %>
+	<%= ">>" %>
+<% end %>
+</span>
+
+<br>
+<ul>
+<% days = @calendar_article.date.week_split %>
+<li>
+	<ul>
+		<li>S</li>
+		<li>M</li>
+		<li>T</li>
+		<li>W</li>
+		<li>T</li>
+		<li>F</li>
+		<li>S</li>
+	</ul>
+</li>
+<% days.each_with_index do |week, week_index| %>
+<li>
+	<ul>
+	<% week.each do |day| %>
+		<li>
+		<% articleForDay = articlesForMonth[day] %>
+		<% if articleForDay %>
+			<%= link_to day, articleForDay %>
+		<% else %>
+			<% if day %>
+				<%= day %>
+			<% else %>
+				-
+			<% end %>
+		<% end %>
+		</li>
+	<% end %>
+	<% if week_index + 1 == @calendar_article.date.total_weeks %>
+		<% if week.count < 7 %>
+			<% for i in (week.count)..6 %>
+			<li>-</li>
+			<% end %>
+		<% end %>
+	<% end %>
+	</ul>
+</li>
+<% end %>
+</ul>
+</div>
