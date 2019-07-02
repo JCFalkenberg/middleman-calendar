@@ -5,7 +5,7 @@ require 'middleman/calendar/version'
 Gem::Specification.new do |spec|
   spec.name          = "middleman-calendar"
   spec.version       = Middleman::Calendar::VERSION
-  spec.authors       = ["Daniel Siemer"]
+  spec.authors       = ["Elizabeth Siemer"]
   spec.email         = ["jcfalkenberg@mac.com"]
 
   spec.summary       = %q{Generates a calendar GUI for your middleman blog}
